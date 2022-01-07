@@ -57,6 +57,6 @@ module "firewall_rules" {
 #network
 resource "google_compute_network" "vpc_network" {
   name                    = var.network_name
-  routing_mode = "GLOBAL"
+  routing_mode            = "GLOBAL"
   auto_create_subnetworks = var.auto_create_subnetworks
 }
