@@ -5,7 +5,7 @@ resource "google_cloud_scheduler_job" "job" {
   schedule    = "* * * * *" #Runs every minute
   time_zone   = "America/Mexico_City"
 
-
+#publishing messages into topic demo1
   pubsub_target {
     # topic.id is the topic's full resource name.
     topic_name = google_pubsub_topic.demo1.id

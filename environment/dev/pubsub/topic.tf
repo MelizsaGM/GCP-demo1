@@ -1,4 +1,4 @@
-#creates subscription
+#creates subscription topic
 
 resource "google_pubsub_topic" "demo1" {
   name = "demo1-topic"

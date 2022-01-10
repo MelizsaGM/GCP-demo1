@@ -21,7 +21,7 @@ resource "google_compute_instance" "vm_instance" {
     }
   }
   service_account {
-    #creates a service account to manage gcloud
+    #creates a service account to manage gcloud commands
     email  = google_service_account.default.email
     scopes = ["cloud-platform"]
   }
