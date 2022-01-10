@@ -1,0 +1,55 @@
+pipeline{
+    agent any
+    environment {
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('gcpdemo-task1') // GCP credentials
+    }
+    tools {
+        terraform 'demo' //github name repo
+    }
+    stages{
+        stage('Setup parameters') { //Set opcion
+            steps {
+                script { 
+                    properties([
+                        parameters([
+                            choice(
+                                choices: ['apply', 'destroy'], 
+                                name: 'Action'
+                            )
+                        ])
+                    ])
+                }
+            }
+        } 
+        
+        stage('Checkout'){
+           steps{
+               git branch: 'main', credentialsId: 'github', url: 'https://github.com/MelizsaGM/GCP-demo1'
+            }
+        }
+        
+        stage('TF Init'){
+            steps{
+                sh 'terraform -chdir=environment/dev init'
+            }
+        }
+
+        stage('TF Plan & Apply') {
+            when { anyOf { environment name: 'Action', value: 'apply' }}
+            steps {
+                
+                sh 'terraform -chdir=environment/dev import google_app_engine_application.app gcpdemo-task1'
+                //sh 'terraform -chdir=environment/dev plan -out myplan'
+                sh 'terraform -chdir=environment/dev apply --auto-approve' //-input=false myplan'
+            }
+        }
+        
+        stage('TF Destroy') {
+            when { anyOf { environment name: 'Action', value: 'destroy' }}
+            steps {
+                sh 'terraform -chdir=environment/dev destroy --auto-approve'
+            }
+        }
+        
+    }
+}
