@@ -25,7 +25,8 @@ fi
 
 systemctl enable cron.service
 echo "Updating cron job"
+#Runs every 5 min
 #/bin/echo "* * * * * gcloud pubsub subscriptions pull demo1-subscription --project gcpdemo-task1" >> $CRON_FILE
-/bin/echo '* * * * * /bin/bash -c "/pubsubbucket/GC_CJ.sh"' >> $CRON_FILE | crontab -
+/bin/echo '*/5 * * * * /bin/bash -c "/pubsubbucket/GC_CJ.sh"' >> $CRON_FILE | crontab -
 /usr/bin/crontab $CRON_FILE
 
