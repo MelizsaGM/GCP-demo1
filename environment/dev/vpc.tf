@@ -33,7 +33,7 @@ module "firewall_rules" {
   network_name = var.network_name
 
   rules = [{
-    name                    = "allow-ssh"
+    name                    = "demo1-allow-ssh"
     description             = null
     direction               = "INGRESS"
     priority                = null
